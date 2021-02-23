@@ -1,10 +1,7 @@
-def ToString(s):     
-    str = ""  
-    
-    for i in s:  
-        str += i  
-     
-    return str
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.con
+# Date: 23/02/2021
+# File cifradoVigenere: Implementación del cifrado de Vigenère.
 
 abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -42,10 +39,10 @@ for i in range(len(texto)):
 
 print("El texto cifrado con números es: ", cifradoNum)
 
-cifrado = []
+cifrado = ""
 for i in range(len(cifradoNum)):
     for j in range(len(abc)):
         if (cifradoNum[i] == j):
-            cifrado.append(abc[j])
+            cifrado = cifrado + abc[j]
 
-print("El texto cifrado es: ", ToString(cifrado))
+print("El texto cifrado es: ", cifrado)
