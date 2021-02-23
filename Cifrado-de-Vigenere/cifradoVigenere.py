@@ -1,11 +1,17 @@
+def ToString(s):     
+    str = ""  
+    
+    for i in s:  
+        str += i  
+     
+    return str
+
 abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z']
 
-#texto = input("Introduzca el texto: ")
-texto = "ESTE MENSAJE SE AUTODESTRUIRA"
+texto = input("Introduzca el texto: ")
 texto = texto.replace(" ", "")
-#clave = input("Introduzca la clave: ")
-clave = "MISION"
+clave = input("Introduzca la clave: ")
 
 textoNum = []
 for i in range(len(texto)):
@@ -13,7 +19,7 @@ for i in range(len(texto)):
         if (texto[i] == abc[j]):
             textoNum.append(j)
 
-print(textoNum)
+print("El texto con números es: ", textoNum)
 
 
 claveNum = []
@@ -23,4 +29,24 @@ for i in range(tam):
         if (clave[i] == abc[j]):
             claveNum.append(j)
     
-print(claveNum)
+print("La clave con números es: ", claveNum)
+
+cifradoNum = []
+cont = 0
+for i in range(len(texto)):
+    if (cont+1 == tam):
+        cifradoNum.append((claveNum[cont] + textoNum[i]) % 26)
+        cont = 0
+    else:
+        cifradoNum.append((claveNum[cont] + textoNum[i]) % 26)
+        cont += 1
+
+print("El texto cifrado con números es: ", cifradoNum)
+
+cifrado = []
+for i in range(len(cifradoNum)):
+    for j in range(len(abc)):
+        if (cifradoNum[i] == j):
+            cifrado.append(abc[j])
+
+print("El texto cifrado es: ", ToString(cifrado))
