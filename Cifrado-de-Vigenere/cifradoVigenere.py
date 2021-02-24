@@ -7,20 +7,20 @@ import funciones as F
 
 abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z']
 
-resp = input("¿Quiere cifrar un mensaje? S/n  ")
+res = input("¿Quiere cifrar un mensaje? S/n  ")
 
-if resp == 'S' or resp == 's':
+if res == 'S' or res == 's':
 
-    texto = input("Introduzca el texto: ")
-    texto = texto.replace(" ", "")
+    men = input("Introduzca el mensaje: ")
+    men = men.replace(" ", "")
     clave = input("Introduzca la clave: ")
 
-    textoNum = F.pasar_a_numero(abc, texto)
+    textoNum = F.pasar_a_numero(abc, men)
     claveNum = F.pasar_a_numero(abc, clave)
 
     cifradoNum = []
     cont = 0
-    for i in range(len(texto)):
+    for i in range(len(men)):
         cifradoNum.append((claveNum[cont] + textoNum[i]) % 26)
         if (cont+1 == len(clave)):
             cont = 0
@@ -28,18 +28,18 @@ if resp == 'S' or resp == 's':
             cont += 1
 
     cifrado = F.pasar_a_letras(abc, cifradoNum)
-    print("El texto cifrado es: ", cifrado)
+    print("El mensaje cifrado es: ", cifrado)
 
-elif resp == 'N' or resp == 'n':
+elif res == 'N' or res == 'n':
 
-    resp = input("¿Quiere descifrar un mensaje? S/n  ")
+    res = input("¿Quiere descifrar un mensaje? S/n  ")
 
-    if resp == 'S' or resp == 's':
+    if res == 'S' or res == 's':
 
-        texto = input("Introduzca el texto cifrado: ")
+        men = input("Introduzca el mensaje cifrado: ")
         clave = input("Introduzca la clave: ")
 
-        textoNum = F.pasar_a_numero(abc, texto)
+        textoNum = F.pasar_a_numero(abc, men)
         claveNum = F.pasar_a_numero(abc, clave)
 
         desCifradoNum = []
@@ -55,7 +55,7 @@ elif resp == 'N' or resp == 'n':
                 cont += 1
 
         desCifrado = F.pasar_a_letras(abc, desCifradoNum)
-        print("El texto descifrado es: ", desCifrado)
+        print("El mensaje descifrado es: ", desCifrado)
 
     else:
         F.error()

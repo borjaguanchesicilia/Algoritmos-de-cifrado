@@ -5,11 +5,11 @@
 
 import sys
 
-def pasar_a_numero(abc, texto):
+def pasar_a_numero(abc, men):
     num = []
-    for i in range(len(texto)):
+    for i in range(len(men)):
         for j in range(len(abc)):
-            if (texto[i] == abc[j]):
+            if (men[i] == abc[j]):
                 num.append(j)
     return num
 
