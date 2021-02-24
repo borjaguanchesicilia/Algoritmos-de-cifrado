@@ -15,13 +15,13 @@ if res == 'S' or res == 's':
     men = men.replace(" ", "")
     clave = input("Introduzca la clave: ")
 
-    textoNum = F.pasar_a_numero(abc, men)
+    menNum = F.pasar_a_numero(abc, men)
     claveNum = F.pasar_a_numero(abc, clave)
 
     cifradoNum = []
     cont = 0
     for i in range(len(men)):
-        cifradoNum.append((claveNum[cont] + textoNum[i]) % 26)
+        cifradoNum.append((claveNum[cont] + menNum[i]) % 26)
         if (cont+1 == len(clave)):
             cont = 0
         else:
@@ -39,13 +39,13 @@ elif res == 'N' or res == 'n':
         men = input("Introduzca el mensaje cifrado: ")
         clave = input("Introduzca la clave: ")
 
-        textoNum = F.pasar_a_numero(abc, men)
+        menNum = F.pasar_a_numero(abc, men)
         claveNum = F.pasar_a_numero(abc, clave)
 
         desCifradoNum = []
         cont = num = 0
-        for i in range(len(textoNum)):
-            num = (textoNum[i] - claveNum[cont]) % 26
+        for i in range(len(menNum)):
+            num = (menNum[i] - claveNum[cont]) % 26
             if num < 0:
                 num = num + 26         
             desCifradoNum.append(num)
