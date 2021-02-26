@@ -3,7 +3,7 @@
 # Date: 23/02/2021
 # File cifradoVigenere.py: Implementación del cifrado y descifrado de Vigenère.
 
-import funciones as F
+from funciones import *
 
 abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -15,8 +15,8 @@ if res == 'S' or res == 's':
     men = men.replace(" ", "")
     clave = input("Introduzca la clave: ")
 
-    menNum = F.pasar_a_numero(abc, men)
-    claveNum = F.pasar_a_numero(abc, clave)
+    menNum = pasar_a_numero(abc, men)
+    claveNum = pasar_a_numero(abc, clave)
 
     cifradoNum = []
     cont = 0
@@ -27,7 +27,7 @@ if res == 'S' or res == 's':
         else:
             cont += 1
 
-    cifrado = F.pasar_a_letras(abc, cifradoNum)
+    cifrado = pasar_a_letras(abc, cifradoNum)
     print("El mensaje cifrado es: ", cifrado)
 
 elif res == 'N' or res == 'n':
@@ -39,8 +39,8 @@ elif res == 'N' or res == 'n':
         men = input("Introduzca el mensaje cifrado: ")
         clave = input("Introduzca la clave: ")
 
-        menNum = F.pasar_a_numero(abc, men)
-        claveNum = F.pasar_a_numero(abc, clave)
+        menNum = pasar_a_numero(abc, men)
+        claveNum = pasar_a_numero(abc, clave)
 
         desCifradoNum = []
         cont = num = 0
@@ -54,10 +54,10 @@ elif res == 'N' or res == 'n':
             else:
                 cont += 1
 
-        desCifrado = F.pasar_a_letras(abc, desCifradoNum)
+        desCifrado = pasar_a_letras(abc, desCifradoNum)
         print("El mensaje descifrado es: ", desCifrado)
 
     else:
-        F.error()
+        error()
 else:
-    F.error()
+    error()
