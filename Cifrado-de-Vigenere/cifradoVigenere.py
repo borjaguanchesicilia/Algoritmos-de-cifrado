@@ -1,5 +1,5 @@
 # Author: Borja Guanche Sicilia
-# Mail: bg.sicilia@gmail.con
+# Mail: bg.sicilia@gmail.com
 # Date: 23/02/2021
 # File cifradoVigenere.py: Implementación del cifrado y descifrado de Vigenère.
 
