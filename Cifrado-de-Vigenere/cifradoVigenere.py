@@ -45,7 +45,7 @@ elif res == 'N' or res == 'n':
         desCifradoNum = []
         cont = num = 0
         for i in range(len(menNum)):
-            num = (menNum[i] - claveNum[cont]) % 26
+            num = (menNum[i] - claveNum[cont])
             if num < 0:
                 num = num + 26         
             desCifradoNum.append(num)
