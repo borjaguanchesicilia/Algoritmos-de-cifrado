@@ -11,12 +11,14 @@ for i in range(256):
     S.append(i)
     K.append(semilla[i % len(semilla)])
 
+
 j = 0
 for i in range(256):
     j = ((j + S[i] + K[i]) % 256)
     S[i], S[j] = S[j], S[i]
 
 print(S)
+
 
 secuaciaCifrante = []
 k = i = j = 0
@@ -27,6 +29,7 @@ while(k < len(texto)):
     t = (S[i]+S[j]) % 256
     secuaciaCifrante.append(t)
     k += 1
+
 
 for i in range(len(secuaciaCifrante)):
     secuaciaCifrante[i] = S[secuaciaCifrante[i]]
@@ -45,7 +48,5 @@ print(textoBinario)
 textoCifrado = []
 for i in range(len(textoBinario)):
     textoCifrado.append(int(bin(int(textoBinario[i], 2) ^ int(secuaciaCifrante[i], 2))[2:]))
-    #convertimos a int base 2
-
 
 print(textoCifrado)
