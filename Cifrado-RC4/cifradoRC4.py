@@ -1,6 +1,6 @@
 # Author: Borja Guanche Sicilia
-# Mail: bg.sicilia@gmail.com
-# Date: 23/02/2021
+# Mail: alu0101205908@ull.edu.es
+# # Date: 01/03/2021
 # File cifradoRC4.py: Implementación del cifrado RC4.
 
 semilla = [2, 5]
@@ -17,7 +17,8 @@ for i in range(256):
     j = ((j + S[i] + K[i]) % 256)
     S[i], S[j] = S[j], S[i]
 
-print(S)
+print("S: ", S)
+print("\nK: ", K)
 
 
 secuaciaCifrante = []
@@ -35,18 +36,18 @@ for i in range(len(secuaciaCifrante)):
     secuaciaCifrante[i] = S[secuaciaCifrante[i]]
     secuaciaCifrante[i] = str(bin(secuaciaCifrante[i])[2:]) 
 
-print(secuaciaCifrante)
+print("\nSecuancia cifrante: ", secuaciaCifrante)
 
 
 textoBinario = []
 for i in range(len(texto)):
     textoBinario.append(str(bin(texto[i])[2:]))
 
-print(textoBinario)
+print("\nTexto original en binario", textoBinario)
 
 
 textoCifrado = []
 for i in range(len(textoBinario)):
     textoCifrado.append(int(bin(int(textoBinario[i], 2) ^ int(secuaciaCifrante[i], 2))[2:]))
 
-print(textoCifrado)
+print("\nTexto cifrado", textoCifrado)
