@@ -19,46 +19,46 @@ def ksa(semilla):
     return S
 
 
-def prga(S, texto):
-    secCifr = []
+def prga(S, textoEnClaro):
+    bytesSecuenciaCifrante = []
     k = i = j = 0
-    while(k < len(texto)):
+    while(k < len(textoEnClaro)):
         i = (i + 1) % 256
         j = (j+S[i]) % 256
         S[i], S[j] = S[j], S[i]
         t = (S[i]+S[j]) % 256
-        secCifr.append(t)
+        bytesSecuenciaCifrante.append(t)
         k += 1
 
-    for i in range(len(secCifr)):
-        secCifr[i] = S[secCifr[i]]
-        secCifr[i] = str(bin(secCifr[i])[2:]) 
+    for i in range(len(bytesSecuenciaCifrante)):
+        bytesSecuenciaCifrante[i] = S[bytesSecuenciaCifrante[i]]
+        bytesSecuenciaCifrante[i] = str(bin(bytesSecuenciaCifrante[i])[2:]) 
 
-    return secCifr
-
-
-def pasarBinario(texto):
-    textoBinario = []
-    for i in range(len(texto)):
-        textoBinario.append(str(bin(texto[i])[2:]))
-
-    return textoBinario
+    return bytesSecuenciaCifrante
 
 
-def cifrar(textoBinario, secuenciaCifrante):
+def pasarABinario(textoEnClaro):
+    textoEnBinario = []
+    for i in range(len(textoEnClaro)):
+        textoEnBinario.append(str(bin(textoEnClaro[i])[2:]))
+
+    return textoEnBinario
+
+
+def cifrar(textoEnBinario, secuenciaCifrante):
     textoCifrado = []
-    for i in range(len(textoBinario)):
-        textoCifrado.append(bin(int(textoBinario[i], 2) ^ int(secuenciaCifrante[i], 2))[2:])
+    for i in range(len(textoEnBinario)):
+        textoCifrado.append(bin(int(textoEnBinario[i], 2) ^ int(secuenciaCifrante[i], 2))[2:])
 
     return textoCifrado
 
 
 def desCifrar(textoCifrado, secuenciaCifrante):
-    textoDescifrado = []
+    textoEnClaro = []
     for i in range(len(textoCifrado)):
-        textoDescifrado.append(int(textoCifrado[i], 2) ^ int(secuenciaCifrante[i], 2))
+        textoEnClaro.append(int(textoCifrado[i], 2) ^ int(secuenciaCifrante[i], 2))
 
-    return textoDescifrado
+    return textoEnClaro
 
 
 def error():
@@ -70,18 +70,18 @@ res = input("¿Quiere cifrar el mensaje? S/n  ")
 
 if res == 'S' or res == 's':
     semilla = [2, 5]
-    texto = [1, 34]
+    textoEnClaro = [1, 34]
     S = ksa(semilla)
-    generacion = prga(S, texto)
-    textoBinario = pasarBinario(texto)
-    print("\nEl texto es: ", texto)
+    secuenciaCifrante = prga(S, textoEnClaro)
+    textoEnBinario = pasarABinario(textoEnClaro)
+    print("\nEl texto en claro es: ", textoEnClaro)
     print("\nLa semilla es: ", semilla)
-    print("\nEl texto cifrado es: ", cifrar(textoBinario, generacion))
+    print("\nEl texto cifrado es: ", cifrar(textoEnBinario, secuenciaCifrante))
 elif res == 'N' or res == 'n':
-    semilla = ['10010000', '1110']
+    secuenciaCifrante = ['10010000', '1110']
     textoCifrado = ['10010001', '101100']
     print("\nEl texto cifrado es: ", textoCifrado)
-    print("\nLa semilla es: ", semilla)
-    print("\nEl texto descifrado es: ", desCifrar(textoCifrado, semilla))
+    print("\nLa secuencia cifrante es: ", secuenciaCifrante)
+    print("\nEl texto descifrado es: ", desCifrar(textoCifrado, secuenciaCifrante))
 else:
     error()
