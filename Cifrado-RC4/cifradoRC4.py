@@ -4,7 +4,7 @@
 # File cifradoRC4.py: Implementación del cifrado RC4.
 
 
-def ksa(semilla):
+def ksa(semilla, f):
     S = []
     K = []
     j = 0
@@ -16,10 +16,14 @@ def ksa(semilla):
         j = ((j + S[i] + K[i]) % 256)
         S[i], S[j] = S[j], S[i]
 
+    f.write("S = ")
+    f.write(str(S))
+    f.write("\n\nK = ")
+    f.write(str(K))
     return S
 
 
-def prga(S, textoEnClaro):
+def prga(S, textoEnClaro, f):
     bytesSecuenciaCifrante = []
     k = i = j = 0
     while(k < len(textoEnClaro)):
@@ -27,28 +31,36 @@ def prga(S, textoEnClaro):
         j = (j+S[i]) % 256
         S[i], S[j] = S[j], S[i]
         t = (S[i]+S[j]) % 256
-        bytesSecuenciaCifrante.append(t)
+        bytesSecuenciaCifrante.append(S[t])
         k += 1
 
     for i in range(len(bytesSecuenciaCifrante)):
-        bytesSecuenciaCifrante[i] = S[bytesSecuenciaCifrante[i]]
-        bytesSecuenciaCifrante[i] = str(bin(bytesSecuenciaCifrante[i])[2:]) 
+        bytesSecuenciaCifrante[i] = str(bin(bytesSecuenciaCifrante[i])[2:])
+
+    f.write("\n\nBytes secuencia cifrante = ")
+    f.write(str(bytesSecuenciaCifrante))
 
     return bytesSecuenciaCifrante
 
 
-def pasarABinario(textoEnClaro):
+def pasarABinario(textoEnClaro, f):
     textoEnBinario = []
     for i in range(len(textoEnClaro)):
         textoEnBinario.append(str(bin(textoEnClaro[i])[2:]))
 
+    f.write("\n\nTexto en binario = ")
+    f.write(str(textoEnBinario))
+
     return textoEnBinario
 
 
-def cifrar(textoEnBinario, secuenciaCifrante):
+def cifrar(textoEnBinario, secuenciaCifrante, f):
     textoCifrado = []
     for i in range(len(textoEnBinario)):
         textoCifrado.append(bin(int(textoEnBinario[i], 2) ^ int(secuenciaCifrante[i], 2))[2:])
+
+    f.write("\n\nTexto cifrado = ")
+    f.write(str(textoCifrado))
 
     return textoCifrado
 
@@ -69,14 +81,17 @@ def error():
 res = input("¿Quiere cifrar el mensaje? S/n  ")
 
 if res == 'S' or res == 's':
+    f = open("cifrado.txt", "w")
     semilla = [2, 5]
     textoEnClaro = [1, 34]
-    S = ksa(semilla)
-    secuenciaCifrante = prga(S, textoEnClaro)
-    textoEnBinario = pasarABinario(textoEnClaro)
+    S = ksa(semilla, f)
+    secuenciaCifrante = prga(S, textoEnClaro, f)
+    textoEnBinario = pasarABinario(textoEnClaro, f)
     print("\nEl texto en claro es: ", textoEnClaro)
     print("\nLa semilla es: ", semilla)
-    print("\nEl texto cifrado es: ", cifrar(textoEnBinario, secuenciaCifrante))
+    print("\nLa secuencia cifrante es: ", secuenciaCifrante)
+    print("\nEl texto cifrado es: ", cifrar(textoEnBinario, secuenciaCifrante, f))
+    f.close()
 elif res == 'N' or res == 'n':
     secuenciaCifrante = ['10010000', '1110']
     textoCifrado = ['10010001', '101100']
