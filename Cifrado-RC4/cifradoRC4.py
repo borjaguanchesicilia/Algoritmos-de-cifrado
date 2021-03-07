@@ -51,3 +51,10 @@ for i in range(len(textoBinario)):
     textoCifrado.append(int(bin(int(textoBinario[i], 2) ^ int(secuaciaCifrante[i], 2))[2:]))
 
 print("\nTexto cifrado", textoCifrado)
+
+
+textoDesifrado = []
+for i in range(len(textoCifrado)):
+    textoDesifrado.append(int(textoCifrado[i], 2) ^ int(secuaciaCifrante[i], 2))
+
+print("\nTexto descifrado", textoDesifrado)
