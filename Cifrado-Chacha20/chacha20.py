@@ -1,7 +1,3 @@
-import numpy as np
-
-#instalar numpy: sudo apt install python3-numpy
-
 def qr(a,b,c,d):
 
     a = int(a, 16)
@@ -27,12 +23,28 @@ def qr(a,b,c,d):
 
     return hex(a), hex(b), hex(c), hex(d)
 
+
 def rotl(a, b):
     return ((a << b)&0xffffffff) | (a >> (32 - b))
 
 
-def chachaBlock():
+# Función para convertir una string en un hexadecimal en formato little endian
+def toLittleEndian(str):
+    littleEndian = ""
+    for i in range(len(str)):
+        if str[i] == ':':
+            littleEndian = str[i-1] + littleEndian
+            littleEndian = str[i-2] + littleEndian
 
+    littleEndian = str[10] + littleEndian
+    littleEndian = str[9] + littleEndian
+    littleEndian = "0x" + littleEndian
+
+    num = int(littleEndian, 16)
+    return hex(num)
+
+
+def chachaBlock(clave, contador, nonce):
     x = []
     y = []
     out = []
@@ -47,34 +59,18 @@ def chachaBlock():
     y.append(hex(0x79622d32))
     y.append(hex(0x6b206574))
 
-    x.append(hex(0x03020100))
-    x.append(hex(0x07060504))
-    x.append(hex(0x0b0a0908))
-    x.append(hex(0x0f0e0d0c))
-    x.append(hex(0x13121110))
-    x.append(hex(0x17161514))
-    x.append(hex(0x1b1a1918))
-    x.append(hex(0x1f1e1d1c))
+    for i in range(len(clave)):
+        x.append(toLittleEndian(clave[i]))
+        y.append(toLittleEndian(clave[i]))
 
+    for i in range(len(contador)):
+        x.append(toLittleEndian(contador[i]))
+        y.append(toLittleEndian(contador[i]))
 
-    y.append(hex(0x03020100))
-    y.append(hex(0x07060504))
-    y.append(hex(0x0b0a0908))
-    y.append(hex(0x0f0e0d0c))
-    y.append(hex(0x13121110))
-    y.append(hex(0x17161514))
-    y.append(hex(0x1b1a1918))
-    y.append(hex(0x1f1e1d1c))
+    for i in range(len(nonce)):
+        x.append(toLittleEndian(nonce[i]))
+        y.append(toLittleEndian(nonce[i]))
 
-    x.append(hex(0x00000001))
-    x.append(hex(0x09000000))
-    x.append(hex(0x4a000000))
-    x.append(hex(0x00000000))
-
-    y.append(hex(0x00000001))
-    y.append(hex(0x09000000))
-    y.append(hex(0x4a000000))
-    y.append(hex(0x00000000))
    
     print("Estado inicial:\n")
     print(x[0][2:], x[1][2:], x[2][2:], x[3][2:])
@@ -103,7 +99,7 @@ def chachaBlock():
     print(x[12][2:], x[13][2:], x[14][2:], x[15][2:], "\n\n")
 
     for i in range(16):
-        out.append(hex(int(x[i],16) + int(y[i],16)&0xffffffff))
+        out.append(hex(int(x[i],16) + int(y[i],16)))
 
     print("Estado de salida del generador:\n")
     print(out[0][2:], out[1][2:], out[2][2:], out[3][2:])
@@ -111,4 +107,9 @@ def chachaBlock():
     print(out[8][2:], out[9][2:], out[10][2:], out[11][2:])
     print(out[12][2:], out[13][2:], out[14][2:], out[15][2:])
 
-chachaBlock()
+
+clave = ['00:01:02:03', '04:05:06:07','08:09:0a:0b', '0c:0d:0e:0f', '10:11:12:13', '14:15:16:17', '18:19:1a:1b', '1c:1d:1e:1f']
+contador = ['01:00:00:00']
+nonce = ['00:00:00:09', '00:00:00:4a', '00:00:00:00']
+
+chachaBlock(clave, contador, nonce)
