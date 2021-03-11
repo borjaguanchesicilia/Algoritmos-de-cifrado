@@ -1,7 +1,7 @@
 # Author: Borja Guanche Sicilia
 # Mail: alu0101205908@ull.edu.es
 # # Date: 01/03/2021
-# File cifradoRC4.py: Implementación del cifrado RC4.
+# File cifradoRC4.py: Implementación del cifrado y descifrado del algoritmo RC4.
 
 
 def ksa(semilla, f):
