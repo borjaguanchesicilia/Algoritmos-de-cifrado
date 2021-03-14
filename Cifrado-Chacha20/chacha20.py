@@ -44,32 +44,51 @@ def toLittleEndian(str):
     return hex(num)
 
 
-def chachaBlock(clave, contador, nonce):
-    x = []
-    y = []
-    out = []
+def inner_Block(x):
 
+    x[0], x[4], x[8], x[12] = qr(x[0], x[4], x[8], x[12])
+    x[1], x[5], x[9], x[13] = qr(x[1], x[5], x[9], x[13])
+    x[2], x[6], x[10], x[14] = qr(x[2], x[6], x[10], x[14])
+    x[3], x[7], x[11], x[15] = qr(x[3], x[7], x[11], x[15])
+
+    x[0], x[5], x[10], x[15] = qr(x[0], x[5], x[10], x[15])
+    x[1], x[6], x[11], x[12] = qr(x[1], x[6], x[11], x[12])
+    x[2], x[7], x[8], x[13] = qr(x[2], x[7], x[8], x[13])
+    x[3], x[4], x[9], x[14] = qr(x[3], x[4], x[9], x[14])
+
+    return x
+
+
+def chacha20Block(clave, contador, nonce):
+    x = []
+    entrada = []
+    salida = []
+
+    #Constantes (128 bits) 4 palabras
     x.append(hex(0x61707865))
     x.append(hex(0x3320646e))
     x.append(hex(0x79622d32))
     x.append(hex(0x6b206574))
 
-    y.append(hex(0x61707865))
-    y.append(hex(0x3320646e))
-    y.append(hex(0x79622d32))
-    y.append(hex(0x6b206574))
+    entrada.append(hex(0x61707865))
+    entrada.append(hex(0x3320646e))
+    entrada.append(hex(0x79622d32))
+    entrada.append(hex(0x6b206574))
 
+    #Clave (256 bits) 8 palabras en Little endian
     for i in range(len(clave)):
         x.append(toLittleEndian(clave[i]))
-        y.append(toLittleEndian(clave[i]))
+        entrada.append(toLittleEndian(clave[i]))
 
+    #Contador (32 bits) 1 palabra en Little endian
     for i in range(len(contador)):
         x.append(toLittleEndian(contador[i]))
-        y.append(toLittleEndian(contador[i]))
+        entrada.append(toLittleEndian(contador[i]))
 
+    #Nonce (96 bits) 3 palabras en Little endian
     for i in range(len(nonce)):
         x.append(toLittleEndian(nonce[i]))
-        y.append(toLittleEndian(nonce[i]))
+        entrada.append(toLittleEndian(nonce[i]))
 
    
     print("Estado inicial:\n")
@@ -78,19 +97,9 @@ def chachaBlock(clave, contador, nonce):
     print(x[8][2:], x[9][2:], x[10][2:], x[11][2:])
     print(x[12][2:], x[13][2:], x[14][2:], x[15][2:], "\n\n")
 
-    for i in range(20):
-        # Rondas pares
-        if (i % 2 == 0):
-            x[0], x[4], x[8], x[12] = qr(x[0], x[4], x[8], x[12])
-            x[1], x[5], x[9], x[13] = qr(x[1], x[5], x[9], x[13])
-            x[2], x[6], x[10], x[14] = qr(x[2], x[6], x[10], x[14])
-            x[3], x[7], x[11], x[15] = qr(x[3], x[7], x[11], x[15])
-        else:
-            # Rondas impares
-            x[0], x[5], x[10], x[15] = qr(x[0], x[5], x[10], x[15])
-            x[1], x[6], x[11], x[12] = qr(x[1], x[6], x[11], x[12])
-            x[2], x[7], x[8], x[13] = qr(x[2], x[7], x[8], x[13])
-            x[3], x[4], x[9], x[14] = qr(x[3], x[4], x[9], x[14])
+    for i in range(10):
+        inner_Block(x)
+        
 
     print("Estado final tras las 20 iteraciones:\n")
     print(x[0][2:], x[1][2:], x[2][2:], x[3][2:])
@@ -99,13 +108,13 @@ def chachaBlock(clave, contador, nonce):
     print(x[12][2:], x[13][2:], x[14][2:], x[15][2:], "\n\n")
 
     for i in range(16):
-        out.append(hex(int(x[i],16) + int(y[i],16)))
+        salida.append(hex(int(x[i],16) + int(entrada[i],16)))
 
     print("Estado de salida del generador:\n")
-    print(out[0][2:], out[1][2:], out[2][2:], out[3][2:])
-    print(out[4][2:], out[5][2:], out[6][2:], out[7][2:])
-    print(out[8][2:], out[9][2:], out[10][2:], out[11][2:])
-    print(out[12][2:], out[13][2:], out[14][2:], out[15][2:])
+    print(salida[0][2:], salida[1][2:], salida[2][2:], salida[3][2:])
+    print(salida[4][2:], salida[5][2:], salida[6][2:], salida[7][2:])
+    print(salida[8][2:], salida[9][2:], salida[10][2:], salida[11][2:])
+    print(salida[12][2:], salida[13][2:], salida[14][2:], salida[15][2:])
 
 
 clave = ['00:01:02:03', '04:05:06:07','08:09:0a:0b', '0c:0d:0e:0f', '10:11:12:13', '14:15:16:17', '18:19:1a:1b', '1c:1d:1e:1f']
