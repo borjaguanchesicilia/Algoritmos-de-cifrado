@@ -1,3 +1,12 @@
+# Author: Borja Guanche Sicilia
+# Mail: alu0101205908@ull.edu.es
+# # Date: 15/03/2021
+# File chacha20.py: Implementación del cifrado Chacha20.
+
+
+from funciones import *
+
+
 # Función para relizar las operaciones de suma (en módulo 32), xor y desplazamiento
 def qr(a,b,c,d):
 
@@ -31,21 +40,6 @@ def rotacionAIzquierda(a, n):
     return ((a << n)&0xffffffff) | (a >> (32 - n))
 
 
-# Función para convertir una string en un hexadecimal en formato little endian
-def toLittleEndian(str):
-    littleEndian = ""
-    for i in range(len(str)):
-        if str[i] == ':':
-            littleEndian = str[i-1] + littleEndian
-            littleEndian = str[i-2] + littleEndian
-
-    littleEndian = str[10] + littleEndian
-    littleEndian = str[9] + littleEndian
-    littleEndian = "0x" + littleEndian
-
-    return hex(int(littleEndian, 16))
-
-
 # Función para realizar las operaciones qr en columnas y diagonales
 def bloqueInterno(x):
 
@@ -64,13 +58,6 @@ def bloqueInterno(x):
     x[3], x[4], x[9], x[14] = qr(x[3], x[4], x[9], x[14])
 
     return x
-
-
-def mostrarEstado(x):
-    print(x[0][2:], x[1][2:], x[2][2:], x[3][2:])
-    print(x[4][2:], x[5][2:], x[6][2:], x[7][2:])
-    print(x[8][2:], x[9][2:], x[10][2:], x[11][2:])
-    print(x[12][2:], x[13][2:], x[14][2:], x[15][2:], "\n\n")
 
 
 def BloqueChacha20(clave, contador, nonce):
@@ -124,8 +111,4 @@ def BloqueChacha20(clave, contador, nonce):
     mostrarEstado(salida)
 
 
-clave = ['00:01:02:03', '04:05:06:07','08:09:0a:0b', '0c:0d:0e:0f', '10:11:12:13', '14:15:16:17', '18:19:1a:1b', '1c:1d:1e:1f']
-contador = ['01:00:00:00']
-nonce = ['00:00:00:09', '00:00:00:4a', '00:00:00:00']
-
-BloqueChacha20(clave, contador, nonce)
+BloqueChacha20(leerFichero("entrada.txt")[0], leerFichero("entrada.txt")[1], leerFichero("entrada.txt")[2])
