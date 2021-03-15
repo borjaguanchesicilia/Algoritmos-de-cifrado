@@ -22,6 +22,7 @@ def qr(a,b,c,d):
     b = b ^ c
     b = rotacionAIzquierda(b, 7)
 
+
     return hex(a), hex(b), hex(c), hex(d)
 
 
@@ -117,7 +118,7 @@ def BloqueChacha20(clave, contador, nonce):
 
 
     for i in range(16):
-        salida.append(hex(int(x[i],16) + int(entrada[i],16)))
+        salida.append(hex(int(x[i],16) + int(entrada[i],16)&0xffffffff))
 
     print("Estado de salida del generador:\n")
     mostrarEstado(salida)
