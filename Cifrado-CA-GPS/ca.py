@@ -1,15 +1,19 @@
+import copy
+
 def generador(estado1, estado2):
-    primerRDLR, auxRDLR, realimentacion1, primerEstado, segundoRDLR, realimentacion2, segundoEstado, paraXor, secuencia = ([] for i in range(9))
-    
+    primerRDLR, auxRDLR, realimentacion1, primerEstado, estadoAnterior1, segundoRDLR, realimentacion2, segundoEstado, estadoAnterior2, paraXor, secuencia = ([] for i in range(11))
+
     for i in range(10):
         primerRDLR.append(int(estado1[i]))
         segundoRDLR.append(int(estado2[i]))
+        estadoAnterior1.append(int(estado1[i]))
+        estadoAnterior2.append(int(estado2[i]))
 
     print("LFSR1                           realimentación    LFSR2                           realimentación     Secuencia C/A PRN1")
 
     for i in range(14):
-        primerEstado = primerRDLR
-        segundoEstado = segundoRDLR
+        primerEstado = estadoAnterior1
+        segundoEstado = estadoAnterior2
 
         # LFSR1
         xor1 = primerRDLR[2] ^ primerRDLR[9]
@@ -40,9 +44,12 @@ def generador(estado1, estado2):
         secuencia.append(paraXor[0] ^ paraXor[1] ^ paraXor[2])
         paraXor.clear()
 
+
         #Mostrado
         print(primerEstado, "      ",xor1,"         ", segundoEstado, "      ",xor2,"                   ", secuencia[i])
-
+        
+        estadoAnterior1 = copy.deepcopy(primerRDLR)
+        estadoAnterior2 = copy.deepcopy(segundoRDLR)
 
     print("\n\nRealimentación 1:  ", realimentacion1, "\n")
     print("Realimentación 2:  ", realimentacion2, "\n")
