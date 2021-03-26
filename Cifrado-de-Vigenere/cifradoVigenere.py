@@ -5,7 +5,7 @@
 
 from funciones import *
 
-abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z']
+abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z']
 
 res = input("¿Quiere cifrar un mensaje? S/n  ")
 
@@ -14,6 +14,8 @@ if res == 'S' or res == 's':
     men = input("Introduzca el mensaje: ")
     men = men.replace(" ", "")
     clave = input("Introduzca la clave: ")
+    men = men.upper()
+    clave = clave.upper()
 
     menNum = pasar_a_numero(abc, men)
     claveNum = pasar_a_numero(abc, clave)
@@ -21,7 +23,7 @@ if res == 'S' or res == 's':
     cifradoNum = []
     cont = 0
     for i in range(len(men)):
-        cifradoNum.append((claveNum[cont] + menNum[i]) % 26)
+        cifradoNum.append((claveNum[cont] + menNum[i]) % 27)
         if (cont+1 == len(clave)):
             cont = 0
         else:
@@ -47,7 +49,7 @@ elif res == 'N' or res == 'n':
         for i in range(len(menNum)):
             num = (menNum[i] - claveNum[cont])
             if num < 0:
-                num = num + 26         
+                num = num + 27         
             desCifradoNum.append(num)
             if (cont+1 == len(clave)):
                 cont = 0
