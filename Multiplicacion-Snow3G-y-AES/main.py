@@ -1,3 +1,8 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# # Date: 30/03/2021
+# File main.py: Implementación de la multiplicación en Snow3G y AES
+
 import sys
 from multiplicacion import *
 

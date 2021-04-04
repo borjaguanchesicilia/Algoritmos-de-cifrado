@@ -1,5 +1,13 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# # Date: 30/03/2021
+# File multiplicacion.py: Implementación de la multiplicación en Snow3G y AES
+
+
+# Función principal. Separamos los ceros, aplicamos la distributiva y operamos
 def multiplicacion(byte1, byte2, byteAlgoritmo):
     
+    # Separamos los 1's del byte2
     separacion1s = []
     k = 0
     aux = ""
@@ -20,17 +28,20 @@ def multiplicacion(byte1, byte2, byteAlgoritmo):
 
     print("\n\nSeparamos los 1's del multiplicador (byte 2): ", separacion1s)
 
+
+    # Aplicamos la propiedad distributiva
     resultados = []
 
     for i in range(len(separacion1s)):
-        if separacion1s[i][7] == "1":
+        if separacion1s[i][7] == "1": # 00000001
             resultados.append(byte1)
         else:
-            resultados.append(distributiva(byte1, separacion1s[i], byteAlgoritmo))
+            resultados.append(desplazamientos(byte1, separacion1s[i], byteAlgoritmo))
 
     print("\n\nAplicamos la distributiva: ", resultados)
 
 
+    # Sumamos los bytes resultantes
     resultado = 0
 
     if len(resultados) % 2 == 0:
@@ -52,26 +63,28 @@ def multiplicacion(byte1, byte2, byteAlgoritmo):
     print("El resultado de la multiplicación en hexadecimal es: ", hex(int(str(resultado), 2))[2:])
 
 
-def distributiva(byte1, byte2, byteAlgoritmo):
+# Función para comprobar y realizar los desplazamientos  
+def desplazamientos(byte1, byte2, byteAlgoritmo):
     
-    pos = 0
+    desplazamiento = 0
     for i in range(len(byte2)):
         if byte2[i] == "1":
-            pos = i
+            desplazamiento = i
             break
+
+    desplazamiento = 7 - desplazamiento
+    print("\n\nTenemos que desplazarnos ", desplazamiento, " posiciones, por lo que haremos ", desplazamiento, " desplazamientos.")
 
     valor = byte1
     iteracion = 0
     print("\n\n%d --> " % iteracion, valor)
-    for i in range(7-pos):
-        if valor[0] == "1":
+    for i in range(desplazamiento):
+        if valor[0] == "1": # Desplazamos y sumamos byte Snow3G | AES
             valor = valor[1:]
             valor = valor + "0"
             valor = int(valor, 2) ^ int(byteAlgoritmo, 2)
-            valor = bin(valor)[2:]
-            valor = str(valor)
-            valor = completar(valor)
-        else:
+            valor = completar(str(bin(valor)[2:]))
+        else: # Desplazamos
             valor = valor[1:]
             valor = valor + "0"
         iteracion = iteracion + 1
@@ -80,7 +93,7 @@ def distributiva(byte1, byte2, byteAlgoritmo):
     return valor
 
 
-# Funcion para pasar los bytes a binario
+# Función para pasar los bytes a binario
 def bytesABinario(byte):
 
     valor = str(bin(byte)[2:])
