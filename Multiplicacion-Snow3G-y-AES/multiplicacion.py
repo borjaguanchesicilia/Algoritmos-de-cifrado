@@ -44,23 +44,13 @@ def multiplicacion(byte1, byte2, byteAlgoritmo):
     # Sumamos los bytes resultantes
     resultado = 0
 
-    if len(resultados) % 2 == 0:
-        for i in range(len(resultados)-1):
-            resultado = int(resultados[i], 2) ^ int(resultados[i+1], 2)
-            resultado = str(bin(resultado)[2:])
+    for i in range(len(resultados)):
+        resultado = resultado ^ int(resultados[i], 2)
 
-        resultado = completar(resultado)
-    else:
-        for i in range(len(resultados)-2):
-            resultado = int(resultados[i], 2) ^ int(resultados[i+1], 2)
-            resultado = str(bin(resultado)[2:])
+        #resultado = bin(resultado)[2:]
 
-        resultado = int(resultado, 2) ^ int(resultados[len(resultados)-1], 2)
-
-        resultado = bin(resultado)[2:]
-
-    print("\n\nEl resultado de la multiplicación en binario es: ", resultado)
-    print("El resultado de la multiplicación en hexadecimal es: ", hex(int(str(resultado), 2))[2:])
+    print("\n\nEl resultado de la multiplicación en binario es: ", completar(str(bin(resultado)[2:])))
+    print("El resultado de la multiplicación en hexadecimal es: ", hex(resultado)[2:])
 
 
 # Función para comprobar y realizar los desplazamientos  
