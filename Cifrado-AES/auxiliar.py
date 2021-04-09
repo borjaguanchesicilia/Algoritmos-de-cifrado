@@ -4,8 +4,6 @@ def matrizToString(matriz):
     for i in range(len(matriz)):
         cadena = cadena + matriz[i]
 
-    cadena = cadena.replace("0x", "")
-
     return cadena
 
 
