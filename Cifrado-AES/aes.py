@@ -1,10 +1,9 @@
 import numpy as np
 from multiplicacion import *
+from expansion import *
 
 
-def aes(clave, textoEnClaro):
-
-    claveString = matrizToString(clave)
+def aes(claveString, textoEnClaro):
 
     bloque = []
 
@@ -12,25 +11,48 @@ def aes(clave, textoEnClaro):
 
     sCaja = np.loadtxt('sCaja.txt',dtype=str)
 
+    nK = nB = 4
+    nR = 10
+    clave = []
+    aux = ""
+    w = []
+    for i in range(0, len(claveString), 2):
+        aux = claveString[i] + claveString[i+1]
+        byte = hex(int(aux, 16))[2:]
+        if len(byte) == 1:
+            byte = "0" + byte
+        clave.append(byte)
+        aux = ""
+
+    print(clave)
+
+    j = 0
+    claves = expansionClaves(clave, w, nK, nB, nR)
 
     # Ronda inicial
 
     for i in range(len(textoEnClaro)):
-        bloque.append(hex(int(clave[i], 16) ^ int(textoEnClaro[i], 16)))
+        bloque.append(hex(int(claves[j][i], 16) ^ int(textoEnClaro[i], 16)))
 
     bloqueString = matrizToString(bloque)
 
-    print("R0 (Subclave = ", claveString, ") = ", bloqueString)
+    print("R0 (Subclave = ", claves[0], ") = ", bloqueString)
+    j = j + 1
 
-    bloque = operacionSustitucion(bloque, sCaja)
-    print("Operacion sustitucion: ", bloque)
-    bloque = operacionDesplazamiento(bloque)
-    print("Operacion desplazamiento: ", bloque)
-    bloque = operacionMultiplicacion(bloque)
-    print("Operacion multiplicacion: ", bloque)
-    clave = ['a0', 'fa', 'fe', '17', '88', '54', '2c', 'b1', '23', 'a3', '39', '39', '2a', '6e', '76', '05']
-    bloque = operacionSuma(clave, bloque)
-    print("Operacion suma: ", bloque)
+
+    for i in range(9):
+        bloque = operacionSustitucion(bloque, sCaja)
+        print("Operacion sustitucion: ", bloque)
+        bloque = operacionDesplazamiento(bloque)
+        print("Operacion desplazamiento: ", bloque)
+        bloque = operacionMultiplicacion(bloque)
+        print("Operacion multiplicacion: ", bloque)
+        print("La clave es: ", claves[j])
+        bloque = operacionSuma(claves[j], bloque)
+        print("Operacion suma: ", bloque)
+        bloqueString = matrizToString(bloque)
+        print("R%d" %(i+1), "(Subclave = ", claves[j], ") = ", bloqueString)
+        j = j + 1
 
     # Resto de rondas
 
@@ -139,28 +161,6 @@ def operacionSuma(clave, matriz):
 
     return matrizResultado
 
-
-def expansionClaves(key, w, nK):
-
-    temp = 0
-    i = 0
-
-    while(i < nK):
-        w[i] = (key[4*i], key[4*i+1], key[4*i+2], key[4*i+3])
-        i = i + 1
-    
-    i = nK
-
-
-    while(i < nB * (nR+1)):
-        temp = w[i-1]
-        if (i % nK == 0):
-            temp = subWord(rotWord(temp)) ^ rCon[i/nK]
-        elif (nK > 6 and i % nK == 4):
-            temp = subWord(temp)
-
-        w[i] = w[i-nK] ^ temp
-        i = i + 1
 
 def matrizToString(matriz):
 
