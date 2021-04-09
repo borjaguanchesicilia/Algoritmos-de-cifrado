@@ -81,6 +81,7 @@ def expansionClaves(key, w, nK, nB, nR):
 
     return subClaves
         
+        
 def subWord(bytes):
 
     sCaja = np.loadtxt('sCaja.txt',dtype=str)
