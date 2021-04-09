@@ -55,7 +55,7 @@ def operacionDesplazamiento(matriz):
             desplz = desplz + 1
             break
 
-    matrizFinal = traspuestaInv(matrizFinal)
+    matrizFinal = traspuesta(matrizFinal)
 
     return matrizFinal
 

@@ -20,24 +20,6 @@ def traspuesta(matriz):
     return matrizResultado
 
 
-def traspuestaInv(matriz):
-    
-    matrizResultado = []
-
-    matrizResultado.append(matriz[0])
-    matrizResultado.append(matriz[4])
-    matrizResultado.append(matriz[8])
-    matrizResultado.append(matriz[12])
-
-    for i in range(1, 4):
-        matrizResultado.append(matriz[i])
-        matrizResultado.append(matriz[i+4])
-        matrizResultado.append(matriz[i+8])
-        matrizResultado.append(matriz[i+12])
-
-    return matrizResultado
-
-
 def cadenaToMatrizBytes(cadena):
     
     matriz = []
