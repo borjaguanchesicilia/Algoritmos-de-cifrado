@@ -3,58 +3,110 @@ from multiplicacion import *
 from expansion import *
 
 
-def aes(claveString, textoEnClaro):
+def aes(clave, textoEnClaro):
+
+    fichero = open('ejecuciones.txt',"w") # Fichero para almacenar todas los resultados de las operaciones
 
     bloque = []
-
-    # Recogida de la sCaja
-
-    sCaja = np.loadtxt('sCaja.txt',dtype=str)
-
-    nK = nB = 4
-    nR = 10
-    clave = []
+    nK = nB = 4 # Tamaño de 
+    nR = 10 # Número de rondas
     aux = ""
     w = []
-    for i in range(0, len(claveString), 2):
-        aux = claveString[i] + claveString[i+1]
-        byte = hex(int(aux, 16))[2:]
-        if len(byte) == 1:
-            byte = "0" + byte
-        clave.append(byte)
-        aux = ""
+    j = 0 # Clave que se usará
 
-    print(clave)
 
-    j = 0
+    # Recogida de la sCaja desde fichero y cargada como matriz
+    sCaja = np.loadtxt('sCaja.txt',dtype=str)
+
+
+    # Expansión de la clave (se obtienen 10 subclaves)
     claves = expansionClaves(clave, w, nK, nB, nR)
+
 
     # Ronda inicial
 
-    for i in range(len(textoEnClaro)):
-        bloque.append(hex(int(claves[j][i], 16) ^ int(textoEnClaro[i], 16)))
+    byteClave = ""
+    for i in range(0, 32, 2):
+        byteClave = claves[j][i] + claves[j][i+1]
+        byteTextoEnClaro = textoEnClaro[i] + textoEnClaro[i+1]
+        suma = hex(int(byteClave, 16) ^ int(byteTextoEnClaro, 16))[2:]
+        if len(suma) != 2:
+            suma = "0" + suma
+        bloque.append(suma)
 
     bloqueString = matrizToString(bloque)
 
-    print("R0 (Subclave = ", claves[0], ") = ", bloqueString)
+    print("R0  (Subclave =", claves[0], ") = ", bloqueString)
     j = j + 1
 
+    # Resto de rondas
 
     for i in range(9):
+        fichero.write("La clave es: ")
+        fichero.write(str(claves[j]))
+        fichero.write("\n")
+        fichero.write("El bloque es: ")
+        fichero.write(str(bloque))
+        fichero.write("\n\n")
+
+        # Operación SubBytes
         bloque = operacionSustitucion(bloque, sCaja)
-        print("Operacion sustitucion: ", bloque)
+        fichero.write("Operacion sustitucion: ")
+        fichero.write(str(bloque))
+        fichero.write("\n\n")
+
+        # Operación de ShiftRow
         bloque = operacionDesplazamiento(bloque)
-        print("Operacion desplazamiento: ", bloque)
+        fichero.write("Operacion desplazamiento: ")
+        fichero.write(str(bloque))
+        fichero.write("\n\n")
+
+        # Operación de MixColumn
         bloque = operacionMultiplicacion(bloque)
-        print("Operacion multiplicacion: ", bloque)
-        print("La clave es: ", claves[j])
-        bloque = operacionSuma(claves[j], bloque)
-        print("Operacion suma: ", bloque)
+        fichero.write("Operacion multiplicacion: ")
+        fichero.write(str(bloque))
+        fichero.write("\n\n")
+
+        # Operación de AddRoundKey
+        bloque = operacionSuma(cadenaToMatrizBytes(claves[j]), bloque)
+        fichero.write("Operacion suma: ")
+        fichero.write(str(bloque))
+        fichero.write("\n\n\n\n")
+
         bloqueString = matrizToString(bloque)
-        print("R%d" %(i+1), "(Subclave = ", claves[j], ") = ", bloqueString)
+        print("R%d" %(i+1), " (Subclave =", claves[j], ") = ", bloqueString)
         j = j + 1
 
-    # Resto de rondas
+
+    # Última ronda
+
+    fichero.write("La clave es: ")
+    fichero.write(str(claves[j]))
+    fichero.write("\n")
+    fichero.write("El bloque es: ")
+    fichero.write(str(bloque))
+    fichero.write("\n\n")
+
+    # Operación SubBytes
+    bloque = operacionSustitucion(bloque, sCaja)
+    fichero.write("Operacion sustitucion: ")
+    fichero.write(str(bloque))
+    fichero.write("\n\n")
+    
+    # Operación de ShiftRow
+    bloque = operacionDesplazamiento(bloque)
+    fichero.write("Operacion desplazamiento: ")
+    fichero.write(str(bloque))
+    fichero.write("\n\n")
+    
+    # Operación de AddRoundKey
+    bloque = operacionSuma(cadenaToMatrizBytes(claves[j]), bloque)
+    fichero.write("Operacion suma: ")
+    fichero.write(str(bloque))
+    fichero.write("\n\n")
+    
+    bloqueString = matrizToString(bloque)
+    print("R10 (Subclave =", claves[j], ") = ", bloqueString)
 
 
 def operacionSustitucion(matriz, sCaja):
@@ -64,12 +116,12 @@ def operacionSustitucion(matriz, sCaja):
     aux1 = aux2 = 0
 
     for i in range(len(matriz)):
-        aux1 = int(matriz[i][2], 16)
-        if len(matriz[i]) < 4:
-            aux2 = int(matriz[i][2], 16)
+        aux1 = int(matriz[i][0], 16)
+        if len(matriz[i]) < 2:
+            aux2 = int(matriz[i][0], 16)
             aux1 = 0
         else:
-            aux2 = int(matriz[i][3], 16)
+            aux2 = int(matriz[i][1], 16)
 
         matrizResultado.append(str(sCaja[aux1][aux2]))
 
@@ -156,8 +208,11 @@ def operacionSuma(clave, matriz):
 
     matrizResultado = []
 
-    for i in range(len(matriz)):
-        matrizResultado.append(hex(int(clave[i], 16) ^ int(matriz[i], 16))[2:])
+    for i in range(16):
+        suma = hex(int(clave[i], 16) ^ int(matriz[i], 16))[2:]
+        if len(suma) != 2:
+            suma = "0" + suma
+        matrizResultado.append(suma)
 
     return matrizResultado
 
@@ -202,3 +257,16 @@ def recolocarInv(matriz):
         matrizResultado.append(matriz[i+12])
 
     return matrizResultado
+
+
+def cadenaToMatrizBytes(cadena):
+    
+    matriz = []
+    str = ""
+
+    for i in range(0, len(cadena), 2):
+        str = str + cadena[i] + cadena[i+1]
+        matriz.append(hex(int(str, 16))[2:])
+        str = ""
+
+    return matriz

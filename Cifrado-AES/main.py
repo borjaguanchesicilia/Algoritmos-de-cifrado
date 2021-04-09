@@ -2,27 +2,17 @@ from aes import *
 
 def main(claveString, textoEnClaroString):
 
-    #clave = []
-    #textoEnClaro = []
+    clave = []
 
-    #clave = cadenaToMatrizBytes(claveString)
-    #textoEnClaro = cadenaToMatrizBytes(textoEnClaroString)
+    for i in range(0, len(claveString), 2):
+        aux = claveString[i] + claveString[i+1]
+        byte = hex(int(aux, 16))[2:]
+        if len(byte) == 1:
+            byte = "0" + byte
+        clave.append(byte)
+        aux = ""
 
-    #aes(clave, textoEnClaro)
-    aes(claveString, textoEnClaroString)
-
-
-def cadenaToMatrizBytes(cadena):
-
-    matriz = []
-    str = ""
-
-    for i in range(0, len(cadena), 2):
-        str = str + cadena[i] + cadena[i+1]
-        matriz.append(hex(int(str, 16)))
-        str = ""
-
-    return matriz
+    aes(clave, textoEnClaroString)
 
 #clave = input("Introduzca la clave: ")
 #textoEnClaro = input("Introduzca el texto en claro: ")
