@@ -1,7 +1,7 @@
 # Author: Borja Guanche Sicilia
 # Mail: bg.sicilia@gmail.com
-# # Date: 30/03/2021
-# File multiplicacion.py: Implementación de la multiplicación en Snow3G y AES
+# Date: 30/03/2021
+# File multiplicacion.py: Implementación de la multiplicación para el AES
 
 
 # Función principal. Separamos los ceros, aplicamos la distributiva y operamos

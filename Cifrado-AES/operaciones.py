@@ -1,5 +1,12 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 09/04/2021
+# File operaciones.py: Implementación de las 4 operaciones básicas para el cifrado AES.
+
+
 from auxiliar import *
 from multiplicacion import *
+
 
 def operacionSustitucion(matriz, sCaja):
 
@@ -69,21 +76,23 @@ def operacionMultiplicacion(matriz):
     multip02 = bytesABinario(int("02", 16))
     multip03 = bytesABinario(int("03", 16))
 
+    byteAes = "00011011"
+
     for i in range(0, 16, 4):
-        multiplicacion1 = multiplicacion(multip02, bytesABinario(int(matriz[i], 16)), "00011011")
-        multiplicacion2 = multiplicacion(multip03, bytesABinario(int(matriz[i+1], 16)), "00011011")
+        multiplicacion1 = multiplicacion(multip02, bytesABinario(int(matriz[i], 16)), byteAes)
+        multiplicacion2 = multiplicacion(multip03, bytesABinario(int(matriz[i+1], 16)), byteAes)
         s0 = int(multiplicacion1, 16) ^ int(multiplicacion2, 16) ^ int(matriz[i+2], 16) ^ int(matriz[i+3], 16)
         
-        multiplicacion1 = int(multiplicacion(multip02, bytesABinario(int(matriz[i+1], 16)), "00011011"), 16)
-        multiplicacion2 = int(multiplicacion(multip03, bytesABinario(int(matriz[i+2], 16)), "00011011"), 16)
+        multiplicacion1 = int(multiplicacion(multip02, bytesABinario(int(matriz[i+1], 16)), byteAes), 16)
+        multiplicacion2 = int(multiplicacion(multip03, bytesABinario(int(matriz[i+2], 16)), byteAes), 16)
         s1 = int(matriz[i], 16) ^ multiplicacion1 ^ multiplicacion2 ^ int(matriz[i+3], 16)
         
-        multiplicacion1 = int(multiplicacion(multip02, bytesABinario(int(matriz[i+2], 16)), "00011011"), 16)
-        multiplicacion2 = int(multiplicacion(multip03, bytesABinario(int(matriz[i+3], 16)), "00011011"), 16)
+        multiplicacion1 = int(multiplicacion(multip02, bytesABinario(int(matriz[i+2], 16)), byteAes), 16)
+        multiplicacion2 = int(multiplicacion(multip03, bytesABinario(int(matriz[i+3], 16)), byteAes), 16)
         s2 = int(matriz[i], 16) ^ int(matriz[i+1], 16) ^ multiplicacion1 ^ multiplicacion2 
         
-        multiplicacion1 = int(multiplicacion(multip03, bytesABinario(int(matriz[i], 16)), "00011011"), 16)
-        multiplicacion2 = int(multiplicacion(multip02, bytesABinario(int(matriz[i+3], 16)), "00011011"), 16)
+        multiplicacion1 = int(multiplicacion(multip03, bytesABinario(int(matriz[i], 16)), byteAes), 16)
+        multiplicacion2 = int(multiplicacion(multip02, bytesABinario(int(matriz[i+3], 16)), byteAes), 16)
         s3 =  multiplicacion1 ^ int(matriz[i+1], 16) ^ int(matriz[i+2], 16) ^ multiplicacion2
 
 

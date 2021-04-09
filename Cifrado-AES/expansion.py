@@ -1,3 +1,9 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 09/04/2021
+# File expansion.py: Implementación de la funcion expansión de claves para el cifrado AES.
+
+
 import numpy as np
 
 def expansionClaves(key, w, nK, nB, nR):
@@ -81,7 +87,7 @@ def expansionClaves(key, w, nK, nB, nR):
 
     return subClaves
         
-        
+
 def subWord(bytes):
 
     sCaja = np.loadtxt('sCaja.txt',dtype=str)

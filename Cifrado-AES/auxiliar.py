@@ -1,3 +1,9 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 09/04/2021
+# File funciones.py: Implementación de funciones auxiliares para el cifrado AES.
+
+
 def matrizToString(matriz):
 
     cadena = ""

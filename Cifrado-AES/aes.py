@@ -1,3 +1,9 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 09/04/2021
+# File aes.py: Implementación del cifrado AES.
+
+
 import numpy as np
 from expansion import *
 from operaciones import *
