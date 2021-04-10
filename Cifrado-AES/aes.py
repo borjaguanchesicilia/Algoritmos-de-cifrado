@@ -17,7 +17,6 @@ def aes(clave, textoEnClaro):
     nK = nB = 4 # Tamaño de 
     nR = 10 # Número de rondas
     aux = ""
-    w = []
     j = 0 # Clave que se usará
 
 
@@ -26,20 +25,12 @@ def aes(clave, textoEnClaro):
 
 
     # Expansión de la clave (se obtienen 10 subclaves)
-    claves = expansionClaves(clave, w, nK, nB, nR)
+    claves = expansionClaves(clave, nK, nB, nR)
 
 
     # Ronda inicial
 
-    byteClave = ""
-    for i in range(0, 32, 2):
-        byteClave = claves[j][i] + claves[j][i+1]
-        byteTextoEnClaro = textoEnClaro[i] + textoEnClaro[i+1]
-        suma = hex(int(byteClave, 16) ^ int(byteTextoEnClaro, 16))[2:]
-        if len(suma) != 2:
-            suma = "0" + suma
-        MatrizDeEstado.append(suma)
-
+    MatrizDeEstado = operacionSuma(cadenaToMatrizBytes(claves[j]), textoEnClaro)
     MatrizDeEstadoString = matrizToString(MatrizDeEstado)
 
     print("R0  (Subclave =", claves[0], ") = ", MatrizDeEstadoString)

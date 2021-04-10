@@ -9,16 +9,12 @@ from aes import *
 def main(claveString, textoEnClaroString):
 
     clave = []
+    textoEnClaro = []
 
-    for i in range(0, len(claveString), 2):
-        aux = claveString[i] + claveString[i+1]
-        byte = hex(int(aux, 16))[2:]
-        if len(byte) == 1:
-            byte = "0" + byte
-        clave.append(byte)
-        aux = ""
+    clave = cadenaToMatrizBytes(claveString)
+    textoEnClaro = cadenaToMatrizBytes(textoEnClaroString)
 
-    aes(clave, textoEnClaroString)
+    aes(clave, textoEnClaro)
 
 clave = input("Introduzca la clave: ")
 textoEnClaro = input("Introduzca el texto en claro: ")

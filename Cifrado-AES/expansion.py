@@ -6,10 +6,10 @@
 
 import numpy as np
 
-def expansionClaves(key, w, nK, nB, nR):
+def expansionClaves(key, nK, nB, nR):
 
     f = open('subclaves.txt',"w")
-
+    w = []
     temp = []
     i = 0
 

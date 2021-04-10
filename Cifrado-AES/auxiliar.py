@@ -32,8 +32,11 @@ def cadenaToMatrizBytes(cadena):
     str = ""
 
     for i in range(0, len(cadena), 2):
-        str = str + cadena[i] + cadena[i+1]
-        matriz.append(hex(int(str, 16))[2:])
-        str = ""
+        aux = cadena[i] + cadena[i+1]
+        byte = hex(int(aux, 16))[2:]
+        if len(byte) == 1:
+            byte = "0" + byte
+        matriz.append(byte)
+        aux = ""
 
     return matriz
