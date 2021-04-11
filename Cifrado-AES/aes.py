@@ -33,7 +33,7 @@ def aes(clave, textoEnClaro):
     MatrizDeEstado = operacionSuma(cadenaToMatrizBytes(claves[j]), textoEnClaro)
     MatrizDeEstadoString = matrizToString(MatrizDeEstado)
 
-    print("R0  (Subclave =", claves[0], ") = ", MatrizDeEstadoString)
+    print("\n\nR0  (Subclave =", claves[0], ") = ", MatrizDeEstadoString)
     j = j + 1
 
 
@@ -105,3 +105,4 @@ def aes(clave, textoEnClaro):
     
     MatrizDeEstadoString = matrizToString(MatrizDeEstado)
     print("R10 (Subclave =", claves[j], ") = ", MatrizDeEstadoString)
+    print("\n\nEl bloque de texto cifrado es: ", MatrizDeEstadoString)
