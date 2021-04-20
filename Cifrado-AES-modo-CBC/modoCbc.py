@@ -24,12 +24,18 @@ def cbc(clave, textoEnClaro, vectorInicializacion):
     else:
         for i in range(len(textoEnClaro)):
             if (i == len(textoEnClaro)-1):
-                i = i - 1
-                while(len(aux) != 16):
-                    aux.append(textoEnClaro[i])
-                    i = i + 1
-                textoCifrado = aes(clave, operacionXorBytes(aux, textoCifrado))
-                resultadoTextoCifrado.append(textoCifrado)
+                aux.append(textoEnClaro[i])
+                if len(textoCifrado) == 0:
+                    textoCifrado = aes(clave, operacionXorBytes(aux, vectorInicializacion))
+                    resultadoTextoCifrado.append(textoCifrado)
+
+                else:
+                    i = i - 1
+                    while(len(aux) != 16):
+                        aux.append(textoEnClaro[i])
+                        i = i + 1
+                    textoCifrado = aes(clave, operacionXorBytes(aux, textoCifrado))
+                    resultadoTextoCifrado.append(textoCifrado)
                 break
 
             if contador <16:
