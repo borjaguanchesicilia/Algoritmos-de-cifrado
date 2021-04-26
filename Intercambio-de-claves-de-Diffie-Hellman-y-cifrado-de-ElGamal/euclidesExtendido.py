@@ -1,3 +1,9 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 26/04/2021
+# File euclidesExtendido.py: Implementación del algoritmo de Euclides extendido.
+
+
 def euclidesExtendido(x, y, g):
    
     if x < y:

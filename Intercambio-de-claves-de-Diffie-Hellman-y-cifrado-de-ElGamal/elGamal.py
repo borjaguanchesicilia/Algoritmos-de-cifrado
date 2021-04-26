@@ -1,3 +1,9 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 26/04/2021
+# File elGamal.py: Implementación del algoritmo de cifrado ElGamal.
+
+
 from exponenciacionRapida import *
 from euclidesExtendido import *
 
