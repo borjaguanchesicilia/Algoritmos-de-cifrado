@@ -18,7 +18,7 @@ def elGamal(p, a, k, x, m):
     yB = exponenciacionRapida(a, x, p, f)
 
 
-    # Calculo de la clave compartida entre Alice y Bob:
+    # Calculo de la clave compartida entre Alice y Bob (va a ser la misma):
 
     kA = exponenciacionRapida(yB, k, p, f)
 
