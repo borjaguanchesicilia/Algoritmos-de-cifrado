@@ -37,7 +37,7 @@ def elGamal(p, a, k, x, m):
 
     # Desciframos el mensaje:
 
-    M = (kInversa * kB * m) % p
+    M = (kInversa * C) % p
 
 
     print("Salida: yA = %d" %yA, ", yB = %d" %yB, ", K = %d" %kA, ", C = %d" %C, ", K-1 = %d" %kInversa, ", M = %d" %M)
