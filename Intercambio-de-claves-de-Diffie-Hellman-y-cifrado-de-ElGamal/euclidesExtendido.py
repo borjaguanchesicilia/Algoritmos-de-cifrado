@@ -1,15 +1,16 @@
-def euclidesExtendido(x, y):
+def euclidesExtendido(x, y, g):
    
     if x < y:
-        return euclidesExtendido(y, x)
+        return euclidesExtendido(y, x, g)
 
     a = x
     z = [0, 1]
     i = 0
-    print("i        xi              zi")
-    print(i, "      ",  "               ",z[0])
+    g.write("\n\n %s"% str(y)+"^-1 "+" (mod %s) \n" %str(x))
+    g.write("\ni        xi              zi")
+    g.write("\n"+str(i)+ "      "+  "               "+str(z[0]))
     i = i + 1
-    print(i, "      ",x,  "             ",z[1])
+    g.write("\n"+str(i)+ "      "+str(x)+  "               "+str(z[1]))
     while y != 0:
         div = x // y
         x, y = y, x % y
@@ -17,6 +18,6 @@ def euclidesExtendido(x, y):
         z.append(aux)
         z.pop(0)
         i = i + 1
-        print(i, "      ",x,  "             ",z[1])
+        g.write("\n"+str(i)+ "      "+str(x)+  "               "+str(z[1]))
 
     return z[0]

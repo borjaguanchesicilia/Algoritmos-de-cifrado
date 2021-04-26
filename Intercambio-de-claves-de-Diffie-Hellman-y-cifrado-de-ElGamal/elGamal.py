@@ -4,22 +4,25 @@ from euclidesExtendido import *
 
 def elGamal(p, a, k, x, m):
 
+    f=open("exponenciacionRapida.txt", "w")
+    g=open("euclidesExtendido.txt", "w")
+
     print("Entrada: p = %d" %p, ", a = %d" %a, ", k = %d" %k, ", x = %d" %x, ", m = %d" %m)
 
     # Calculamos valor público de Alice:
 
-    yA = exponenciacionRapida(a, k, p)
+    yA = exponenciacionRapida(a, k, p, f)
 
     # Calculamos valor público de Bob:
 
-    yB = exponenciacionRapida(a, x, p)
+    yB = exponenciacionRapida(a, x, p, f)
 
 
     # Calculo de la clave compartida entre Alice y Bob:
 
-    kA = exponenciacionRapida(yB, k, p)
+    kA = exponenciacionRapida(yB, k, p, f)
 
-    kB = exponenciacionRapida(yA, x, p)
+    kB = exponenciacionRapida(yA, x, p, f)
 
 
     # Ciframos el mensaje:
@@ -29,7 +32,7 @@ def elGamal(p, a, k, x, m):
 
     # Calculo de la inversa de la clave compartida:
 
-    kInversa = euclidesExtendido(kB, p)
+    kInversa = euclidesExtendido(kB, p, g)
 
 
     # Desciframos el mensaje:
