@@ -1,7 +1,14 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 03/05/2021
+# File funciones.py: Implementación de funciones auxiliares para el cifrado RSA.
+
+
 import sys
 import random
 from math import *
 from exponenciacionRapida import * 
+
 
 def primos(p, f):
 

@@ -1,3 +1,9 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 03/05/2021
+# File rsa.py: Implementación del cifrado RSA.
+
+
 from funciones import * 
 from euclidesExtendido import * 
 
