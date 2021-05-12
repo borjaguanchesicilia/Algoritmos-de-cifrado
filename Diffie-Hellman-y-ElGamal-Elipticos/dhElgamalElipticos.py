@@ -1,4 +1,11 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 12/05/2021
+# File dhElgamalElipticos.py: Implementación del cifrado de ElGamal Eliptico y Diffie Hellman.
+
+
 from funciones import * 
+
 
 def elGamalEliptico(p, a, b, G, da, db, m, ficheroEuclidesExten):
 

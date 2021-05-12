@@ -1,3 +1,9 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 12/05/2021
+# File funciones.py: Funciones auxiliares para el cifrado de ElGamal Eliptico.
+
+
 from math import *
 from numpy import *
 from matplotlib.pyplot import *

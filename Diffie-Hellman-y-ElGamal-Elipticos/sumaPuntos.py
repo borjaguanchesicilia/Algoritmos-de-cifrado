@@ -1,3 +1,9 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 12/05/2021
+# File sumaPuntos.py: Implementación de la suma de puntos.
+
+
 from euclidesExtendido import *
 from fractions import *
 

@@ -1,5 +1,12 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 12/05/2021
+# File testPrimalidad.py: Implementación del test de primalidad de Lehman y Peralta.
+
+
 import random
 from exponenciacionRapida import *
+
 
 def primos(p, ficheroExpoRapida):
 

@@ -1,5 +1,12 @@
+# Author: Borja Guanche Sicilia
+# Mail: bg.sicilia@gmail.com
+# Date: 12/05/2021
+# File main.py: Función principal.
+
+
 from dhElgamalElipticos import * 
 from testPrimalidad import * 
+
 
 def main():
 

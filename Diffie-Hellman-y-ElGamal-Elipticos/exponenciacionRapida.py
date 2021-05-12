@@ -1,6 +1,6 @@
 # Author: Borja Guanche Sicilia
 # Mail: bg.sicilia@gmail.com
-# Date: 26/04/2021
+# Date: 12/05/2021
 # File exponenciacionRapida.py: Implementación del algoritmo de exponenciación rápida.
 
 
